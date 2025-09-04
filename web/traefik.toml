@@ -16,7 +16,7 @@
 [accessLog]
 
 [certificatesResolvers.lets-encrypt.acme]
-  email = "${ACME_EMAIL}"
+  email = "MUDAR@EMAIL.COM"
   storage = "acme.json"
   [certificatesResolvers.lets-encrypt.acme.httpChallenge]
     entryPoint = "web"
