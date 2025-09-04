@@ -3,18 +3,17 @@ services:
     image: traefik:latest
     container_name: traefik
     restart: always
-    networks:
-      - web
+    networks: [web]
     ports:
       - 80:80
       - 443:443
     environment:
       - TZ=America/Sao_Paulo
+      - ACME_EMAIL=${ACME_EMAIL}
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.toml:/traefik.toml
-      - ./traefik/traefik_dynamic.toml:/traefik_dynamic.toml
       - ./traefik/acme.json:/acme.json
     logging:
       options:
@@ -25,18 +24,14 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: always
+    networks: [web]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer/data:/data
-    ports:
-      - 8000:8000
-      - 9000:9000
-      - 9443:9443
-    networks:
-      - web
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_DOMAIN}`)"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.tls=true"
       - "traefik.http.routers.portainer.tls.certresolver=lets-encrypt"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
