@@ -1,20 +1,30 @@
 # Orações Automatizadas
 
-## Novo Uusário
+## Novo usuário com poderes de root via sudo
 
 ```
 adduser sammy
+```
 
+```
 usermod -aG sudo sammy
+```
 
+```
 su - sammy
+```
+
+```
+sudo pwd
 ```
 
 ## Docker
 
 ```
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
 
+```
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl
@@ -28,8 +38,12 @@ echo \
   $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
+```
 
+```
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 
+```
 sudo docker run hello-world
 ```
